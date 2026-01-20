@@ -1,0 +1,12 @@
+> df <- read.table("data/household_power_consumption.txt", header = TRUE, sep = ";", na.strings = "?", stringsAsFactors = FALSE)
+> df$datetime <- as.POSIXct(paste(df$Date, df$Time), format = "%d/%m/%Y %H:%M:%S")
+> sub <- df[df$datetime >= as.POSIXct("2007-02-01 00:00:00") & df$datetime < as.POSIXct("2007-02-03 00:00:00"),]
+> sub$Sub_metering_1 <- as.numeric(sub$Sub_metering_1)
+> sub$Sub_metering_2 <- as.numeric(sub$Sub_metering_2)
+> sub$Sub_metering_3 <- as.numeric(sub$Sub_metering_3)
+> png("plot3.png", width = 480, height = 480)
+> plot(sub$datetime, sub$Sub_metering_1, type="l", xlab="", ylab="Energy sub metering")
+> lines(sub$datetime, sub$Sub_metering_2, col = "red")
+> lines(sub$datetime, sub$Sub_metering_3, col = "blue")
+> legend("topright", legend=c("Sub_metering_1", "Sub_metering_2", "Sub_metering_3"), col=c("black", "red", "blue"), lty=1, bty="n")
+> dev.off()
